@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useRef, useState, useEffect, useCallback } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import './index.css';
 
@@ -82,7 +82,7 @@ const App = () => {
         <div onClick={() => handleSelection('nature')}>Nature</div>
         <div onClick={() => handleSelection('birds')}>Birds</div>
         <div onClick={() => handleSelection('cats')}>Cats</div>
-        <div onClick={() => handleSelection('shoes')}>Shoes</div>
+        <div onClick={() => handleSelection('flower')}>Flower</div>
       </div>
       {loading ? (
   <p className='loading'>Loading...</p>
@@ -90,12 +90,20 @@ const App = () => {
   <>
     <div className='images'>
       {images.map((image) => (
+        // Make image a clickable link
+        <a
+        key={image.id}
+        href={image.links.html}
+        target="_blank"
+        rel="noreferrer"
+        >
         <img
           key={image.id}
           src={image.urls.small}
           alt={image.alt_description}
           className='image'
         />
+      </a>
       ))}
     </div>
     <div className='buttons'>
