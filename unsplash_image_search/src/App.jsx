@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Form } from 'react-bootstrap';
 import './index.css';
 
@@ -9,6 +9,8 @@ const IMAGES_PER_PAGE = 20;
 
 const App = () => {
   const searchInput = useRef(null);
+  const [images, setImages] = useState([]);
+  const [totalPages, setTotalPages] = useState(0);
 
     // Add a new fetchImages function inside the App component
     const fetchImages = async () => {
@@ -21,6 +23,8 @@ const App = () => {
           }`
         );
         console.log('data', data);
+        setImages(data.results);
+        setTotalPages(data.total_pages);
           } catch (error) {
             console.log(error);
           }
@@ -45,7 +49,7 @@ const App = () => {
           <Form.Control
             type='search'
             placeholder='Type something to search...'
-            className='seatch-input'
+            className='search-input'
             ref={searchInput}
             />
         </Form>
@@ -57,6 +61,17 @@ const App = () => {
         <div onClick={() => handleSelection('cats')}>Cats</div>
         <div onClick={() => handleSelection('shoes')}>Shoes</div>
       </div>
+      <div className='images'>
+      {images.map((images) => (
+          <img
+            key={images.id}
+            src={images.urls.small}
+            alt={images.alt_description}
+            className='image'
+          />
+        
+      ))}
+    </div>
     </div>
   )
 };
